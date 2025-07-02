@@ -1,0 +1,11 @@
+duration,protocol,src_bytes,dst_bytes,label
+0,TCP,491,0,Normal
+0,UDP,146,0,Normal
+0,TCP,232,8153,DoS
+0,TCP,199,420,DoS
+2,ICMP,0,0,Probe
+0,UDP,105,146,Normal
+1,TCP,100,1000,R2L
+0,ICMP,0,0,Probe
+3,TCP,200,300,DoS
+0,TCP,0,0,U2R

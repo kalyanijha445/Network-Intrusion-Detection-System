@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NIDS - Intrusion Detector</title>
+  <style>
+    :root {
+      --primary: #0d47a1;
+      --bg: #f5f7fa;
+      --text: #333;
+      --card: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode {
+      --bg: #111827;
+      --text: #f1f1f1;
+      --card: #1f2937;
+      --shadow: rgba(255, 255, 255, 0.1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      color: var(--primary);
+    }
+
+    main {
+      background: var(--card);
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px var(--shadow);
+      max-width: 480px;
+      width: 100%;
+      transition: background 0.4s;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      margin-top: 20px;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1.5px solid #aaa;
+      border-radius: 6px;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 6px rgba(13, 71, 161, 0.4);
+    }
+
+    button {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      font-size: 1.1rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #083972;
+    }
+
+    .tooltip {
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--primary);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #888;
+    }
+
+    a.dashboard-link {
+      display: inline-block;
+      margin-top: 20px;
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    a.dashboard-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle" onclick="toggleTheme()">Toggle Theme</div>
+
+  <header>
+    <h1>Network Intrusion Detection</h1>
+    <p>Fill the fields to analyze traffic</p>
+  </header>
+
+  <main>
+    <form method="POST" action="/predict">
+      <label for="duration">Duration (seconds):</label>
+      <input type="number" id="duration" name="duration" required placeholder="e.g. 120" />
+      <div class="tooltip">Time the connection lasted</div>
+
+      <label for="protocol">Protocol:</label>
+      <select id="protocol" name="protocol" required>
+        <option value="" disabled selected>Select protocol</option>
+        <option value="ICMP">ICMP</option>
+        <option value="TCP">TCP</option>
+        <option value="UDP">UDP</option>
+      </select>
+
+      <label for="src_bytes">Source Bytes:</label>
+      <input type="number" id="src_bytes" name="src_bytes" required placeholder="e.g. 3000" />
+      <div class="tooltip">Bytes sent from source</div>
+
+      <label for="dst_bytes">Destination Bytes:</label>
+      <input type="number" id="dst_bytes" name="dst_bytes" required placeholder="e.g. 1500" />
+      <div class="tooltip">Bytes sent to destination</div>
+
+      <button type="submit">Check for Intrusion</button>
+      <button type="reset" style="margin-top: 10px; background: #999;">Reset</button>
+    </form>
+
+    <a href="/dashboard" class="dashboard-link">Go to Dashboard</a>
+  </main>
+
+  <footer>
+    &copy; 2025 NIDS WebApp. All rights reserved.
+  </footer>
+
+  <script>
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+    }
+  </script>
+</body>
+</html>
